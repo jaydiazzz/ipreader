@@ -1,11 +1,12 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const app = express();
 
 app.get('/', (req, res) => {
-  res.send( req.ip );
-})
+  res.send( req.headers['x-appengine-user-ip'] );
+});
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// Listen to the App Engine-specified port, or 8080 otherwise
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}...`);
+});
